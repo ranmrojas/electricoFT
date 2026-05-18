@@ -158,29 +158,58 @@ class CableEnCanvas {
 }
 
 /// Estado temporal mientras el usuario está dibujando un cable.
+///
+/// Dos modos de trazado:
+///   • **Automático** (sin waypoints): terminal A → terminal B directo.
+///     Preview con [rutaOrtogonal]; al cerrar se usa A* con obstáculos.
+///   • **Manual** (≥1 waypoint): cada clic en el aire fija un vértice.
+///     Solo líneas rectas entre puntos consecutivos, sin A* ni esquinas extra.
 class CableEnProgreso {
   const CableEnProgreso({
     required this.fromComponenteId,
     required this.fromTerminalId,
     required this.inicio,
     required this.fin,
+    this.waypoints = const [],
     this.colorCable = ColorCable.negro,
   });
 
   final String fromComponenteId;
   final String fromTerminalId;
+
+  /// Primer punto fijo del cable (terminal de origen).
   final Offset inicio;
+
+  /// Posición actual del cursor (se actualiza con cada movimiento del mouse).
   final Offset fin;
+
+  /// Vértices fijos añadidos por el usuario al clicar en el aire.
+  final List<Offset> waypoints;
+
   final ColorCable colorCable;
 
-  /// Vista previa ortogonal del recorrido mientras se dibuja.
-  List<Offset> get puntos => CableEnCanvas.rutaOrtogonal(inicio, fin);
+  /// `true` cuando el usuario ya fijó al menos un punto manual en el aire.
+  bool get esManual => waypoints.isNotEmpty;
 
-  CableEnProgreso copyWith({Offset? fin}) => CableEnProgreso(
+  /// Último punto fijo: el waypoint más reciente o el inicio.
+  Offset get lastFixed => waypoints.isEmpty ? inicio : waypoints.last;
+
+  /// Polilínea de preview.
+  /// Manual: [inicio, …waypoints, cursor] — un segmento recto entre cada par.
+  /// Automático: ruta ortogonal sugerida de inicio al cursor.
+  List<Offset> get puntos =>
+      esManual ? [inicio, ...waypoints, fin] : CableEnCanvas.rutaOrtogonal(inicio, fin);
+
+  CableEnProgreso copyWith({
+    Offset? fin,
+    List<Offset>? waypoints,
+  }) =>
+      CableEnProgreso(
         fromComponenteId: fromComponenteId,
         fromTerminalId: fromTerminalId,
         inicio: inicio,
         fin: fin ?? this.fin,
+        waypoints: waypoints ?? this.waypoints,
         colorCable: colorCable,
       );
 }

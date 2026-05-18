@@ -5,11 +5,16 @@ import '../library/widgets/componente_card.dart';
 import 'models/cable_en_canvas.dart';
 import 'models/componente_en_canvas.dart';
 import 'models/terminal.dart';
+import 'utils/orthogonal_router.dart';
 import 'utils/polyline_editor.dart';
 import 'widgets/cable_vertex_layer.dart';
 import 'widgets/cables_painter.dart';
 import 'widgets/canvas_componente_widget.dart';
 import 'widgets/canvas_grid_painter.dart';
+import '../simulation/engine/simulation_engine.dart';
+import '../simulation/models/estado_simulacion.dart';
+// ignore: unused_import — usado por _actualizarPropiedades cuando se integre el editor
+import '../simulation/models/propiedades_electricas.dart';
 
 class CanvasPage extends StatefulWidget {
   const CanvasPage({super.key, this.nombreProyecto = 'Nuevo proyecto'});
@@ -48,6 +53,10 @@ class _CanvasPageState extends State<CanvasPage> {
 
   // Color activo para nuevos cables (mutable, se elige desde el panel)
   ColorCable _colorActivoCable = ColorCable.negro;
+
+  // ── Simulación eléctrica ──────────────────────────────────────────────────
+  bool _simulacionActiva = false;
+  Map<String, EstadoSimulacion> _estadosSim = {};
 
   static const double _canvasW = 4000;
   static const double _canvasH = 3000;
@@ -270,8 +279,17 @@ class _CanvasPageState extends State<CanvasPage> {
 
   void _completarCable(String toCompId, String toTermId, Offset finCanvasPos) {
     if (_enProgreso == null) return;
+    final prog = _enProgreso!;
 
-    final puntos = CableEnCanvas.rutaOrtogonal(_enProgreso!.inicio, finCanvasPos);
+    // Manual: solo rectas entre vértices fijados + terminal destino.
+    // Automático (terminal→terminal sin waypoints): A* con obstáculos.
+    final puntos = prog.esManual
+        ? [prog.inicio, ...prog.waypoints, finCanvasPos]
+        : OrthogonalRouter.findPath(
+            start: prog.inicio,
+            end: finCanvasPos,
+            obstacles: _buildObstacles(),
+          );
 
     _saveState();
     setState(() {
@@ -279,14 +297,37 @@ class _CanvasPageState extends State<CanvasPage> {
       _cables.add(CableEnCanvas(
         id: _uid(),
         puntos: puntos,
-        fromComponenteId: _enProgreso!.fromComponenteId,
-        fromTerminalId: _enProgreso!.fromTerminalId,
+        fromComponenteId: prog.fromComponenteId,
+        fromTerminalId: prog.fromTerminalId,
         toComponenteId: toCompId,
         toTerminalId: toTermId,
-        colorCable: _enProgreso!.colorCable,
+        colorCable: prog.colorCable,
       ));
       _enProgreso = null;
     });
+    _correrSimulacion();
+  }
+
+  /// Añade un vértice manual en [canvasPos].
+  /// Solo une con una línea recta al punto anterior; sin autorouting.
+  void _addWaypoint(Offset canvasPos) {
+    final prog = _enProgreso!;
+    setState(() {
+      _enProgreso = prog.copyWith(
+        fin: canvasPos,
+        waypoints: [...prog.waypoints, canvasPos],
+      );
+    });
+  }
+
+  /// Lista de rectángulos de obstáculos (bounding boxes de componentes + margen).
+  List<Rect> _buildObstacles() {
+    const half = ComponenteEnCanvas.tamano / 2 + 10;
+    return _componentes.map((c) => Rect.fromCenter(
+          center: c.posicion,
+          width: half * 2,
+          height: half * 2,
+        )).toList();
   }
 
   void _cancelarCable() {
@@ -295,34 +336,11 @@ class _CanvasPageState extends State<CanvasPage> {
 
   // ── Cables: movimiento del preview y arrastre de segmentos ───────────────
 
-  void _onBodyPanStart(DragStartDetails d) {
-    // Solo se usa durante el dibujo del cable en progreso (preview)
-  }
-
-  void _onBodyPanUpdate(DragUpdateDetails d) {
-    if (_enProgreso == null) return;
-    // Modo dibujo: mover la punta del cable en progreso
-    setState(() {
-      _enProgreso = _enProgreso!.copyWith(
-        fin: _enProgreso!.fin + d.delta / _escala,
-      );
-    });
-  }
-
-  void _onBodyPanEnd(DragEndDetails d) {}
 
   void _onCanvasTapUp(TapUpDetails d) {
-    // Solo se activa durante el dibujo de cable (el cable layer maneja el resto).
-    if (_enProgreso == null) return;
-    final canvasPos = _globalToCanvas(d.globalPosition);
-    final snap = _terminalMasCercano(canvasPos,
-        excluirCompId: _enProgreso!.fromComponenteId,
-        excluirTermId: _enProgreso!.fromTerminalId);
-    if (snap != null) {
-      _completarCable(snap.$1, snap.$2, snap.$3);
-    } else {
-      _cancelarCable();
-    }
+    // La lógica de waypoints y snap de terminal durante el dibujo se gestiona
+    // dentro del GestureDetector del canvas (coordenadas de canvas directas).
+    // Este handler del body ya no necesita hacer nada.
   }
 
   // ── Cables: hit-test y snap ────────────────────────────────────────────────
@@ -366,6 +384,7 @@ class _CanvasPageState extends State<CanvasPage> {
       _cables.removeWhere((c) => c.id == id);
       _cableSeleccionado = null;
     });
+    _correrSimulacion();
   }
 
   void _duplicarCable(String cableId) {
@@ -463,13 +482,15 @@ class _CanvasPageState extends State<CanvasPage> {
   // ── Misc ──────────────────────────────────────────────────────────────────
 
   void _deseleccionar() {
+    // Durante el trazado no deseleccionamos nada; el usuario gestiona
+    // el cable con los propios gestos (tap en terminal, Escape/botón Cancelar).
+    if (_enProgreso != null) return;
     if (_idSeleccionado != null || _cableSeleccionado != null) {
       setState(() {
         _idSeleccionado = null;
         _cableSeleccionado = null;
       });
     }
-    if (_enProgreso != null) _cancelarCable();
   }
 
   void _abrirPanelComponentes() {
@@ -559,6 +580,15 @@ class _CanvasPageState extends State<CanvasPage> {
               ),
             )
           else ...[
+            // ── Botón simulación con indicador de estado ─────────────────────
+            _SimBoton(
+              activo: _simulacionActiva,
+              resumen: _simulacionActiva
+                  ? SimulationEngine.resumen(_estadosSim)
+                  : null,
+              onTap: _toggleSimulacion,
+            ),
+            const SizedBox(width: 4),
             IconButton(
               icon: const Icon(Icons.undo),
               tooltip: 'Deshacer',
@@ -603,12 +633,21 @@ class _CanvasPageState extends State<CanvasPage> {
       // ── Canvas ──────────────────────────────────────────────────────────
       body: Stack(
         children: [
-          GestureDetector(
+          // Listener para el preview del cursor durante el dibujo.
+          // No participa en el gesture arena → no interfiere con los taps del canvas interno.
+          Listener(
+            behavior: HitTestBehavior.translucent,
+            onPointerMove: (e) {
+              if (_enProgreso == null) return;
+              setState(() {
+                _enProgreso = _enProgreso!.copyWith(
+                  fin: _enProgreso!.fin + e.delta / _escala,
+                );
+              });
+            },
+            child: GestureDetector(
         key: _bodyKey,
         onTap: _deseleccionar,
-        onPanStart: _onBodyPanStart,
-        onPanUpdate: _captureCanvasPan ? _onBodyPanUpdate : null,
-        onPanEnd: _captureCanvasPan ? _onBodyPanEnd : null,
         onTapUp: _onCanvasTapUp,
         child: InteractiveViewer(
           transformationController: _transformCtrl,
@@ -641,15 +680,30 @@ class _CanvasPageState extends State<CanvasPage> {
                   child: GestureDetector(
                     behavior: HitTestBehavior.translucent,
                     onTapUp: (d) {
-                      if (_enProgreso != null || _modoBorrador) return;
                       final pos = d.localPosition;
 
+                      // ── Modo dibujo: añadir waypoint o terminar en terminal ─
+                      if (_enProgreso != null) {
+                        if (_modoBorrador) return;
+                        final snap = _terminalMasCercano(pos,
+                            excluirCompId: _enProgreso!.fromComponenteId,
+                            excluirTermId: _enProgreso!.fromTerminalId);
+                        if (snap != null) {
+                          _completarCable(snap.$1, snap.$2, snap.$3);
+                        } else {
+                          _addWaypoint(pos);
+                        }
+                        return;
+                      }
+
+                      if (_modoBorrador) return;
+
+                      // ── Cable seleccionado: tap en segmento → insertar vértice
                       if (_cableSeleccionado != null) {
                         final cIdx = _cables.indexWhere(
                             (c) => c.id == _cableSeleccionado);
                         if (cIdx != -1) {
                           final cable = _cables[cIdx];
-                          // Tap sobre segmento (no sobre vértice) → insertar
                           final vNear = PolylineEditor.nearestVertex(
                               cable.puntos, pos,
                               radius: 14);
@@ -665,6 +719,7 @@ class _CanvasPageState extends State<CanvasPage> {
                         }
                       }
 
+                      // ── Seleccionar cable o deseleccionar ─────────────────
                       final cableId = _cableTocado(pos);
                       setState(() {
                         _cableSeleccionado = cableId;
@@ -762,9 +817,10 @@ class _CanvasPageState extends State<CanvasPage> {
           ),
         ),
       ),
+        ), // GestureDetector body
 
-        ],
-      ),
+        ], // Stack children
+      ),   // Stack
 
       floatingActionButton: dibujando
           ? null
@@ -774,6 +830,45 @@ class _CanvasPageState extends State<CanvasPage> {
               label: const Text('Agregar componente'),
             ),
     );
+  }
+
+  // ── Motor de simulación ───────────────────────────────────────────────────
+
+  /// Corre el motor y actualiza [_estadosSim] si la simulación está activa.
+  /// Llamar solo en cambios estructurales (cables, componentes) — no en mover.
+  void _correrSimulacion() {
+    if (!_simulacionActiva) return;
+    setState(() {
+      _estadosSim = SimulationEngine.run(
+        componentes: _componentes,
+        cables: _cables,
+      );
+    });
+  }
+
+  void _toggleSimulacion() {
+    setState(() {
+      _simulacionActiva = !_simulacionActiva;
+      if (_simulacionActiva) {
+        _estadosSim = SimulationEngine.run(
+          componentes: _componentes,
+          cables: _cables,
+        );
+      } else {
+        _estadosSim = {};
+      }
+    });
+  }
+
+  /// Actualiza las propiedades eléctricas de un componente y recorre la simulación.
+  void _actualizarPropiedades(String compId, PropiedadesElectricas nuevas) {
+    final idx = _componentes.indexWhere((c) => c.id == compId);
+    if (idx == -1) return;
+    _saveState();
+    setState(() {
+      _componentes[idx].propiedades = nuevas;
+    });
+    _correrSimulacion();
   }
 
   void _confirmarLimpiar() {
@@ -1249,6 +1344,105 @@ class _HintVacio extends StatelessWidget {
           style: TextStyle(color: Colors.grey.shade500, fontSize: 15),
         ),
       ],
+    );
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Botón de simulación con indicador de estado sutil
+// ─────────────────────────────────────────────────────────────────────────────
+
+class _SimBoton extends StatelessWidget {
+  const _SimBoton({
+    required this.activo,
+    required this.onTap,
+    this.resumen,
+  });
+
+  final bool activo;
+  final SimulacionResumen? resumen;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+
+    // Color del punto indicador según estado
+    final Color puntoColor;
+    if (!activo || resumen == null) {
+      puntoColor = Colors.transparent;
+    } else {
+      switch (resumen!.tipo) {
+        case TipoResumen.ok:
+          puntoColor = const Color(0xFF4CAF50);
+        case TipoResumen.advertencia:
+          puntoColor = const Color(0xFFFF9800);
+        case TipoResumen.critico:
+          puntoColor = const Color(0xFFE53935);
+        case TipoResumen.sinFuente:
+          puntoColor = const Color(0xFF9E9E9E);
+      }
+    }
+
+    final tooltip = resumen != null
+        ? '${activo ? "Simulando" : "Simular"} · ${resumen!.mensaje}'
+        : activo
+            ? 'Detener simulación'
+            : 'Iniciar simulación';
+
+    return Tooltip(
+      message: tooltip,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(20),
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 220),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+          decoration: BoxDecoration(
+            color: activo ? cs.primaryContainer.withValues(alpha: 0.6) : Colors.transparent,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: activo ? cs.primary.withValues(alpha: 0.6) : cs.outlineVariant,
+            ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                activo ? Icons.stop_circle_outlined : Icons.play_circle_outline,
+                size: 16,
+                color: activo ? cs.primary : cs.onSurfaceVariant,
+              ),
+              const SizedBox(width: 5),
+              Text(
+                'Simular',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: activo ? cs.primary : cs.onSurfaceVariant,
+                ),
+              ),
+              // Punto de estado — solo visible cuando simula
+              AnimatedSize(
+                duration: const Duration(milliseconds: 200),
+                child: activo
+                    ? Padding(
+                        padding: const EdgeInsets.only(left: 6),
+                        child: Container(
+                          width: 7,
+                          height: 7,
+                          decoration: BoxDecoration(
+                            color: puntoColor,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                      )
+                    : const SizedBox.shrink(),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

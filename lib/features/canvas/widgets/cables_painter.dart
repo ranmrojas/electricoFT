@@ -41,6 +41,7 @@ class CablesPainter extends CustomPainter {
         canvas,
         puntos: enProgreso!.puntos,
         color: enProgreso!.colorCable.color,
+        waypoints: enProgreso!.waypoints,
       );
     }
   }
@@ -187,10 +188,11 @@ class CablesPainter extends CustomPainter {
     Canvas canvas, {
     required List<Offset> puntos,
     required Color color,
+    List<Offset> waypoints = const [],
   }) {
     if (puntos.length < 2) return;
 
-    // Sombra sólida offset (sin blur)
+    // Sombra sólida offset
     canvas.drawPath(
       _buildPath(puntos.map((p) => p + const Offset(1, 1.5)).toList()),
       Paint()
@@ -201,7 +203,7 @@ class CablesPainter extends CustomPainter {
         ..style = PaintingStyle.stroke,
     );
 
-    // Línea punteada ortogonal — segmento a segmento
+    // Línea punteada segmento a segmento
     for (int i = 0; i < puntos.length - 1; i++) {
       _drawDashedLine(
         canvas,
@@ -214,8 +216,15 @@ class CablesPainter extends CustomPainter {
       );
     }
 
+    // Punto de inicio
     _drawEndpoint(canvas, puntos.first, color, 3.5);
 
+    // Marcadores de waypoints comprometidos (rombos pequeños)
+    for (final wp in waypoints) {
+      _drawWaypointMarker(canvas, wp, color);
+    }
+
+    // Cursor (punta del cable en el cursor)
     canvas.drawCircle(
         puntos.last,
         6.0,
@@ -229,6 +238,31 @@ class CablesPainter extends CustomPainter {
         Paint()
           ..color = color.withValues(alpha: 0.50)
           ..style = PaintingStyle.fill);
+  }
+
+  /// Dibuja un pequeño rombo/diamante en cada waypoint fijo del usuario.
+  void _drawWaypointMarker(Canvas canvas, Offset pos, Color color) {
+    const r = 4.5;
+    final path = Path()
+      ..moveTo(pos.dx, pos.dy - r)
+      ..lineTo(pos.dx + r, pos.dy)
+      ..lineTo(pos.dx, pos.dy + r)
+      ..lineTo(pos.dx - r, pos.dy)
+      ..close();
+
+    canvas.drawPath(
+      path,
+      Paint()
+        ..color = Colors.white
+        ..style = PaintingStyle.fill,
+    );
+    canvas.drawPath(
+      path,
+      Paint()
+        ..color = color
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.5,
+    );
   }
 
   // ── Utilidades ──────────────────────────────────────────────────────────
