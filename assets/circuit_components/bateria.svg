@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 100">
+  <defs><filter id="s"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-opacity="0.12"/></filter></defs>
+  <!-- cuerpo -->
+  <rect x="8" y="4" width="94" height="82" rx="7" fill="white" stroke="#e0e0e0" stroke-width="1.2" filter="url(#s)"/>
+  <!-- barra generaci�n -->
+  <rect x="8" y="4" width="94" height="9" rx="7" fill="#27ae60"/>
+  <rect x="8" y="9" width="94" height="4" fill="#27ae60"/>
+  <!-- cuerpo bater�a -->
+  <rect x="20" y="22" width="70" height="44" rx="5" fill="#37474f" stroke="#263238" stroke-width="1.5"/>
+  <!-- terminal + -->
+  <rect x="44" y="18" width="10" height="6" rx="2" fill="#e74c3c"/>
+  <!-- barra carga -->
+  <rect x="24" y="38" width="62" height="10" rx="2" fill="#1b5e20"/>
+  <rect x="26" y="40" width="40" height="6" rx="1" fill="#4caf50"/>
+  <text x="55" y="46" font-family="Arial" font-size="7" font-weight="bold" text-anchor="middle" fill="white">75%</text>
+  <!-- voltaje -->
+  <text x="55" y="60" font-family="Arial" font-size="10" font-weight="bold" text-anchor="middle" fill="#b0bec5">12V DC</text>
+  <!-- nombre -->
+  <text x="55" y="96" font-family="Arial" font-size="7" font-weight="600" text-anchor="middle" fill="#555">Bater�a</text>
+  <!-- pin + izq -->
+  <line x1="0" y1="44" x2="8" y2="44" stroke="#e74c3c" stroke-width="2.5"/>
+  <circle cx="4" cy="44" r="4" fill="#e74c3c"/>
+  <text x="4" y="39" font-family="Arial" font-size="8" font-weight="bold" text-anchor="middle" fill="#e74c3c">+</text>
+  <!-- pin - der -->
+  <line x1="102" y1="44" x2="110" y2="44" stroke="#555" stroke-width="2.5"/>
+  <circle cx="106" cy="44" r="4" fill="#555"/>
+  <text x="106" y="39" font-family="Arial" font-size="9" font-weight="bold" text-anchor="middle" fill="#555">?</text>
+</svg>

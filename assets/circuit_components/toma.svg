@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 110">
+  <defs><filter id="s"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-opacity="0.12"/></filter></defs>
+  <!-- cuerpo -->
+  <rect x="8" y="18" width="84" height="78" rx="7" fill="white" stroke="#e0e0e0" stroke-width="1.2" filter="url(#s)"/>
+  <!-- barra básicos -->
+  <rect x="8" y="18" width="84" height="9" rx="7" fill="#F5A623"/>
+  <rect x="8" y="23" width="84" height="4" fill="#F5A623"/>
+  <!-- cara enchufe -->
+  <circle cx="50" cy="62" r="22" fill="white" stroke="#bbb" stroke-width="1.5"/>
+  <!-- ranuras -->
+  <rect x="43" y="52" width="5" height="12" rx="2.5" fill="#666"/>
+  <rect x="52" y="52" width="5" height="12" rx="2.5" fill="#666"/>
+  <rect x="47" y="67" width="6" height="10" rx="3" fill="#666"/>
+  <!-- nombre -->
+  <text x="50" y="106" font-family="Arial" font-size="7" font-weight="600" text-anchor="middle" fill="#555">Toma</text>
+  <!-- pin L top-izq -->
+  <line x1="30" y1="0" x2="30" y2="18" stroke="#e74c3c" stroke-width="2"/>
+  <circle cx="30" cy="3" r="4" fill="#e74c3c"/>
+  <text x="30" y="14" font-family="Arial" font-size="6" font-weight="bold" text-anchor="middle" fill="#e74c3c">L</text>
+  <!-- pin N top-centro -->
+  <line x1="50" y1="0" x2="50" y2="18" stroke="#3498db" stroke-width="2"/>
+  <circle cx="50" cy="3" r="4" fill="#3498db"/>
+  <text x="50" y="14" font-family="Arial" font-size="6" font-weight="bold" text-anchor="middle" fill="#3498db">N</text>
+  <!-- pin PE top-der -->
+  <line x1="70" y1="0" x2="70" y2="18" stroke="#27ae60" stroke-width="2"/>
+  <circle cx="70" cy="3" r="4" fill="#27ae60"/>
+  <text x="70" y="14" font-family="Arial" font-size="6" font-weight="bold" text-anchor="middle" fill="#27ae60">PE</text>
+</svg>

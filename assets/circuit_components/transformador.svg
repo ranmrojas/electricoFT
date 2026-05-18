@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 90">
+  <defs><filter id="s"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-opacity="0.12"/></filter></defs>
+  <rect x="6" y="4" width="118" height="72" rx="7" fill="white" stroke="#e0e0e0" stroke-width="1.2" filter="url(#s)"/>
+  <rect x="6" y="4" width="118" height="9" rx="7" fill="#3498db"/>
+  <rect x="6" y="9" width="118" height="4" fill="#3498db"/>
+  <!-- bobina primaria -->
+  <path d="M 16,45 C 16,34 26,34 26,45 C 26,34 36,34 36,45 C 36,34 46,34 46,45" fill="none" stroke="#e74c3c" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- n�cleo -->
+  <rect x="52" y="22" width="6" height="46" rx="2" fill="#607d8b"/>
+  <rect x="72" y="22" width="6" height="46" rx="2" fill="#607d8b"/>
+  <!-- bobina secundaria -->
+  <path d="M 78,45 C 78,34 88,34 88,45 C 88,34 98,34 98,45 C 98,34 108,34 108,45" fill="none" stroke="#3498db" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- voltajes -->
+  <text x="31" y="66" font-family="Arial" font-size="8" font-weight="bold" text-anchor="middle" fill="#e74c3c">220V</text>
+  <text x="93" y="66" font-family="Arial" font-size="8" font-weight="bold" text-anchor="middle" fill="#3498db">24V</text>
+  <text x="65" y="84" font-family="Arial" font-size="8" font-weight="600" text-anchor="middle" fill="#555">Transformador</text>
+  <!-- pin L izq arr -->
+  <line x1="0" y1="36" x2="6" y2="36" stroke="#e74c3c" stroke-width="2"/>
+  <circle cx="3" cy="36" r="4" fill="#e74c3c"/>
+  <text x="3" y="31" font-family="Arial" font-size="6" font-weight="bold" text-anchor="middle" fill="#e74c3c">L</text>
+  <!-- pin N izq aba -->
+  <line x1="0" y1="52" x2="6" y2="52" stroke="#3498db" stroke-width="2"/>
+  <circle cx="3" cy="52" r="4" fill="#3498db"/>
+  <text x="3" y="48" font-family="Arial" font-size="6" font-weight="bold" text-anchor="middle" fill="#3498db">N</text>
+  <!-- pin + der arr -->
+  <line x1="124" y1="36" x2="130" y2="36" stroke="#e74c3c" stroke-width="2"/>
+  <circle cx="127" cy="36" r="4" fill="#e74c3c"/>
+  <text x="127" y="31" font-family="Arial" font-size="8" font-weight="bold" text-anchor="middle" fill="#e74c3c">+</text>
+  <!-- pin - der aba -->
+  <line x1="124" y1="52" x2="130" y2="52" stroke="#555" stroke-width="2"/>
+  <circle cx="127" cy="52" r="4" fill="#555"/>
+  <text x="127" y="48" font-family="Arial" font-size="9" font-weight="bold" text-anchor="middle" fill="#555">?</text>
+</svg>

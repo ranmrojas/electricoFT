@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <line x1="5" y1="50" x2="42" y2="50" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+  <line x1="42" y1="22" x2="42" y2="78" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
+  <line x1="58" y1="22" x2="58" y2="78" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
+  <line x1="58" y1="50" x2="95" y2="50" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+  <text x="38" y="18" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="currentColor">+</text>
+</svg>

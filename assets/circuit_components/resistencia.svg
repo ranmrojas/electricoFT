@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 60">
+  <defs><filter id="s"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-opacity="0.12"/></filter></defs>
+  <rect x="16" y="6" width="88" height="48" rx="7" fill="white" stroke="#e0e0e0" stroke-width="1.2" filter="url(#s)"/>
+  <rect x="16" y="6" width="88" height="8" rx="7" fill="#F5A623"/>
+  <rect x="16" y="11" width="88" height="3" fill="#F5A623"/>
+  <!-- cuerpo resistencia -->
+  <rect x="30" y="18" width="60" height="24" rx="5" fill="#c8a96e" stroke="#a0845c" stroke-width="1.5"/>
+  <!-- bandas -->
+  <rect x="38" y="18" width="5" height="24" fill="#e74c3c"/>
+  <rect x="47" y="18" width="5" height="24" fill="#333"/>
+  <rect x="56" y="18" width="5" height="24" fill="#e67e22"/>
+  <rect x="71" y="18" width="5" height="24" fill="#f1c40f"/>
+  <text x="60" y="50" font-family="Arial" font-size="7" font-weight="600" text-anchor="middle" fill="#555">Resistencia</text>
+  <!-- pin A izq -->
+  <line x1="0" y1="30" x2="16" y2="30" stroke="#777" stroke-width="2"/>
+  <circle cx="3" cy="30" r="4" fill="#777"/>
+  <text x="15" y="25" font-family="Arial" font-size="6" font-weight="bold" fill="#777">A</text>
+  <!-- pin B der -->
+  <line x1="104" y1="30" x2="120" y2="30" stroke="#777" stroke-width="2"/>
+  <circle cx="117" cy="30" r="4" fill="#777"/>
+  <text x="104" y="25" font-family="Arial" font-size="6" font-weight="bold" fill="#777">B</text>
+</svg>

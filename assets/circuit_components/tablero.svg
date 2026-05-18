@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 130">
+  <defs><filter id="s"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-opacity="0.12"/></filter></defs>
+  <rect x="6" y="14" width="98" height="102" rx="7" fill="white" stroke="#e0e0e0" stroke-width="1.2" filter="url(#s)"/>
+  <rect x="6" y="14" width="98" height="9" rx="7" fill="#E74C3C"/>
+  <rect x="6" y="19" width="98" height="4" fill="#E74C3C"/>
+  <!-- breakers dentro -->
+  <rect x="16" y="28" width="18" height="40" rx="4" fill="#1a6fb5" stroke="#155a9a" stroke-width="1"/>
+  <rect x="19" y="31" width="12" height="10" rx="2" fill="#e74c3c"/>
+  <rect x="38" y="28" width="18" height="40" rx="4" fill="#1a6fb5" stroke="#155a9a" stroke-width="1"/>
+  <rect x="41" y="31" width="12" height="10" rx="2" fill="#e74c3c"/>
+  <rect x="60" y="28" width="18" height="40" rx="4" fill="#1a6fb5" stroke="#155a9a" stroke-width="1"/>
+  <rect x="63" y="31" width="12" height="10" rx="2" fill="#4caf50"/>
+  <rect x="82" y="28" width="18" height="40" rx="4" fill="#1a6fb5" stroke="#155a9a" stroke-width="1"/>
+  <rect x="85" y="31" width="12" height="10" rx="2" fill="#e74c3c"/>
+  <!-- riel DIN -->
+  <rect x="12" y="70" width="86" height="5" rx="2" fill="#90a4ae"/>
+  <!-- bornera salida -->
+  <rect x="14" y="80" width="12" height="16" rx="2" fill="#546e7a" stroke="#455a64" stroke-width="1"/>
+  <rect x="30" y="80" width="12" height="16" rx="2" fill="#546e7a" stroke="#455a64" stroke-width="1"/>
+  <rect x="46" y="80" width="12" height="16" rx="2" fill="#546e7a" stroke="#455a64" stroke-width="1"/>
+  <rect x="62" y="80" width="12" height="16" rx="2" fill="#546e7a" stroke="#455a64" stroke-width="1"/>
+  <rect x="78" y="80" width="12" height="16" rx="2" fill="#546e7a" stroke="#455a64" stroke-width="1"/>
+  <rect x="94" y="80" width="10" height="16" rx="2" fill="#546e7a" stroke="#455a64" stroke-width="1"/>
+  <text x="55" y="108" font-family="Arial" font-size="8" font-weight="600" text-anchor="middle" fill="#555">Tablero</text>
+  <!-- pin L entrada -->
+  <line x1="25" y1="0" x2="25" y2="14" stroke="#e74c3c" stroke-width="2.5"/>
+  <circle cx="25" cy="3" r="4.5" fill="#e74c3c"/>
+  <text x="25" y="12" font-family="Arial" font-size="6" font-weight="bold" text-anchor="middle" fill="#e74c3c">L</text>
+  <!-- pin N entrada -->
+  <line x1="55" y1="0" x2="55" y2="14" stroke="#3498db" stroke-width="2.5"/>
+  <circle cx="55" cy="3" r="4.5" fill="#3498db"/>
+  <text x="55" y="12" font-family="Arial" font-size="6" font-weight="bold" text-anchor="middle" fill="#3498db">N</text>
+  <!-- pin PE entrada -->
+  <line x1="85" y1="0" x2="85" y2="14" stroke="#27ae60" stroke-width="2.5"/>
+  <circle cx="85" cy="3" r="4.5" fill="#27ae60"/>
+  <text x="85" y="12" font-family="Arial" font-size="6" font-weight="bold" text-anchor="middle" fill="#27ae60">PE</text>
+  <!-- pins salida abajo -->
+  <line x1="30" y1="116" x2="30" y2="130" stroke="#e74c3c" stroke-width="2"/>
+  <circle cx="30" cy="127" r="3.5" fill="#e74c3c"/>
+  <line x1="55" y1="116" x2="55" y2="130" stroke="#3498db" stroke-width="2"/>
+  <circle cx="55" cy="127" r="3.5" fill="#3498db"/>
+  <line x1="80" y1="116" x2="80" y2="130" stroke="#27ae60" stroke-width="2"/>
+  <circle cx="80" cy="127" r="3.5" fill="#27ae60"/>
+</svg>

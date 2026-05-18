@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+  <defs><filter id="s"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-opacity="0.12"/></filter></defs>
+  <rect x="10" y="10" width="60" height="60" rx="30" fill="white" stroke="#e0e0e0" stroke-width="1.2" filter="url(#s)"/>
+  <!-- punto central -->
+  <circle cx="40" cy="40" r="10" fill="#f39c12" stroke="#e67e22" stroke-width="1.5"/>
+  <circle cx="40" cy="40" r="4" fill="white"/>
+  <!-- pin arriba -->
+  <line x1="40" y1="0" x2="40" y2="10" stroke="#555" stroke-width="2"/>
+  <circle cx="40" cy="3" r="4" fill="#555"/>
+  <!-- pin abajo -->
+  <line x1="40" y1="70" x2="40" y2="80" stroke="#555" stroke-width="2"/>
+  <circle cx="40" cy="77" r="4" fill="#555"/>
+  <!-- pin izq -->
+  <line x1="0" y1="40" x2="10" y2="40" stroke="#555" stroke-width="2"/>
+  <circle cx="3" cy="40" r="4" fill="#555"/>
+  <!-- pin der -->
+  <line x1="70" y1="40" x2="80" y2="40" stroke="#555" stroke-width="2"/>
+  <circle cx="77" cy="40" r="4" fill="#555"/>
+</svg>

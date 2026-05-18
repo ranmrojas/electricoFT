@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 90">
+  <defs><filter id="s"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-opacity="0.12"/></filter></defs>
+  <rect x="6" y="4" width="118" height="72" rx="7" fill="white" stroke="#e0e0e0" stroke-width="1.2" filter="url(#s)"/>
+  <rect x="6" y="4" width="118" height="9" rx="7" fill="#27ae60"/>
+  <rect x="6" y="9" width="118" height="4" fill="#27ae60"/>
+  <!-- display -->
+  <rect x="38" y="22" width="54" height="26" rx="3" fill="#1b5e20" stroke="#2e7d32" stroke-width="1"/>
+  <text x="65" y="33" font-family="Courier" font-size="9" font-weight="bold" text-anchor="middle" fill="#69f0ae">220V</text>
+  <text x="65" y="44" font-family="Courier" font-size="8" text-anchor="middle" fill="#00e676">50 Hz</text>
+  <!-- etiquetas DC/AC -->
+  <text x="20" y="44" font-family="Arial" font-size="9" font-weight="bold" text-anchor="middle" fill="#555">DC</text>
+  <text x="110" y="44" font-family="Arial" font-size="9" font-weight="bold" text-anchor="middle" fill="#555">AC</text>
+  <!-- flecha DC?AC -->
+  <line x1="38" y1="38" x2="92" y2="38" stroke="#aaa" stroke-width="1" stroke-dasharray="3 2"/>
+  <!-- LED -->
+  <circle cx="100" cy="26" r="4" fill="#00e676"/>
+  <text x="65" y="82" font-family="Arial" font-size="8" font-weight="600" text-anchor="middle" fill="#555">Inversor DC/AC</text>
+  <!-- pin DC+ izq arr -->
+  <line x1="0" y1="35" x2="6" y2="35" stroke="#e74c3c" stroke-width="2"/>
+  <circle cx="3" cy="35" r="4" fill="#e74c3c"/>
+  <text x="3" y="30" font-family="Arial" font-size="7" font-weight="bold" text-anchor="middle" fill="#e74c3c">+</text>
+  <!-- pin DC- izq aba -->
+  <line x1="0" y1="50" x2="6" y2="50" stroke="#555" stroke-width="2"/>
+  <circle cx="3" cy="50" r="4" fill="#555"/>
+  <text x="3" y="46" font-family="Arial" font-size="8" font-weight="bold" text-anchor="middle" fill="#555">?</text>
+  <!-- pin AC L der arr -->
+  <line x1="124" y1="35" x2="130" y2="35" stroke="#e74c3c" stroke-width="2"/>
+  <circle cx="127" cy="35" r="4" fill="#e74c3c"/>
+  <text x="127" y="30" font-family="Arial" font-size="6" font-weight="bold" text-anchor="middle" fill="#e74c3c">L</text>
+  <!-- pin AC N der aba -->
+  <line x1="124" y1="50" x2="130" y2="50" stroke="#3498db" stroke-width="2"/>
+  <circle cx="127" cy="50" r="4" fill="#3498db"/>
+  <text x="127" y="46" font-family="Arial" font-size="6" font-weight="bold" text-anchor="middle" fill="#3498db">N</text>
+</svg>

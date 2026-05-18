@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 130">
+  <defs><filter id="s"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-opacity="0.12"/></filter></defs>
+  <rect x="6" y="14" width="88" height="102" rx="7" fill="white" stroke="#e0e0e0" stroke-width="1.2" filter="url(#s)"/>
+  <rect x="6" y="14" width="88" height="9" rx="7" fill="#3498db"/>
+  <rect x="6" y="19" width="88" height="4" fill="#3498db"/>
+  <!-- pantalla LCD -->
+  <rect x="14" y="30" width="72" height="30" rx="4" fill="#b2dfdb" stroke="#80cbc4" stroke-width="1"/>
+  <text x="50" y="42" font-family="Courier" font-size="10" font-weight="bold" text-anchor="middle" fill="#004d40">000.00</text>
+  <text x="50" y="54" font-family="Arial" font-size="8" text-anchor="middle" fill="#00695c">kWh</text>
+  <!-- LED -->
+  <circle cx="82" cy="36" r="5" fill="#f44336"/>
+  <!-- bornes -->
+  <rect x="18" y="70" width="14" height="12" rx="2" fill="#ddd" stroke="#aaa" stroke-width="1"/>
+  <text x="25" y="79" font-family="Arial" font-size="7" font-weight="bold" text-anchor="middle" fill="#555">1</text>
+  <rect x="36" y="70" width="14" height="12" rx="2" fill="#ddd" stroke="#aaa" stroke-width="1"/>
+  <text x="43" y="79" font-family="Arial" font-size="7" font-weight="bold" text-anchor="middle" fill="#555">2</text>
+  <rect x="54" y="70" width="14" height="12" rx="2" fill="#ddd" stroke="#aaa" stroke-width="1"/>
+  <text x="61" y="79" font-family="Arial" font-size="7" font-weight="bold" text-anchor="middle" fill="#555">3</text>
+  <rect x="72" y="70" width="14" height="12" rx="2" fill="#ddd" stroke="#aaa" stroke-width="1"/>
+  <text x="79" y="79" font-family="Arial" font-size="7" font-weight="bold" text-anchor="middle" fill="#555">4</text>
+  <!-- nombre -->
+  <text x="50" y="102" font-family="Arial" font-size="8" font-weight="600" text-anchor="middle" fill="#555">Medidor</text>
+  <!-- pin L arriba izq -->
+  <line x1="30" y1="0" x2="30" y2="14" stroke="#e74c3c" stroke-width="2"/>
+  <circle cx="30" cy="3" r="4" fill="#e74c3c"/>
+  <text x="30" y="11" font-family="Arial" font-size="6" font-weight="bold" text-anchor="middle" fill="#e74c3c">L</text>
+  <!-- pin N arriba der -->
+  <line x1="70" y1="0" x2="70" y2="14" stroke="#3498db" stroke-width="2"/>
+  <circle cx="70" cy="3" r="4" fill="#3498db"/>
+  <text x="70" y="11" font-family="Arial" font-size="6" font-weight="bold" text-anchor="middle" fill="#3498db">N</text>
+  <!-- pin L salida abajo izq -->
+  <line x1="30" y1="116" x2="30" y2="130" stroke="#e74c3c" stroke-width="2"/>
+  <circle cx="30" cy="127" r="4" fill="#e74c3c"/>
+  <text x="30" y="118" font-family="Arial" font-size="6" font-weight="bold" text-anchor="middle" fill="#e74c3c">L'</text>
+  <!-- pin N salida abajo der -->
+  <line x1="70" y1="116" x2="70" y2="130" stroke="#3498db" stroke-width="2"/>
+  <circle cx="70" cy="127" r="4" fill="#3498db"/>
+  <text x="70" y="118" font-family="Arial" font-size="6" font-weight="bold" text-anchor="middle" fill="#3498db">N'</text>
+</svg>

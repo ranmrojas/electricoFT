@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 100">
+  <defs><filter id="s"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-opacity="0.12"/></filter></defs>
+  <rect x="6" y="4" width="98" height="82" rx="7" fill="white" stroke="#e0e0e0" stroke-width="1.2" filter="url(#s)"/>
+  <rect x="6" y="4" width="98" height="9" rx="7" fill="#27ae60"/>
+  <rect x="6" y="9" width="98" height="4" fill="#27ae60"/>
+  <!-- símbolo generador: círculo con G -->
+  <circle cx="55" cy="47" r="26" fill="none" stroke="#27ae60" stroke-width="2.5"/>
+  <text x="55" y="53" font-family="Arial" font-size="22" font-weight="bold" text-anchor="middle" fill="#27ae60">G</text>
+  <!-- símbolo AC dentro -->
+  <path d="M 43 38 Q 46 34 49 38 Q 52 42 55 38 Q 58 34 61 38" fill="none" stroke="#27ae60" stroke-width="1.5" stroke-linecap="round"/>
+  <text x="55" y="92" font-family="Arial" font-size="8" font-weight="600" text-anchor="middle" fill="#555">Generador AC</text>
+  <!-- pin L izq -->
+  <line x1="0" y1="40" x2="6" y2="40" stroke="#e74c3c" stroke-width="2.5"/>
+  <circle cx="3" cy="40" r="4.5" fill="#e74c3c"/>
+  <text x="3" y="35" font-family="Arial" font-size="6" font-weight="bold" text-anchor="middle" fill="#e74c3c">L</text>
+  <!-- pin N izq -->
+  <line x1="0" y1="56" x2="6" y2="56" stroke="#3498db" stroke-width="2.5"/>
+  <circle cx="3" cy="56" r="4.5" fill="#3498db"/>
+  <text x="3" y="52" font-family="Arial" font-size="6" font-weight="bold" text-anchor="middle" fill="#3498db">N</text>
+  <!-- pin PE der -->
+  <line x1="104" y1="47" x2="110" y2="47" stroke="#27ae60" stroke-width="2.5"/>
+  <circle cx="107" cy="47" r="4.5" fill="#27ae60"/>
+  <text x="107" y="42" font-family="Arial" font-size="6" font-weight="bold" text-anchor="middle" fill="#27ae60">PE</text>
+</svg>

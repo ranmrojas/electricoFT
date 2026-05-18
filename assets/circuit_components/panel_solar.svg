@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 100">
+  <defs><filter id="s"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-opacity="0.12"/></filter></defs>
+  <rect x="6" y="14" width="108" height="72" rx="7" fill="white" stroke="#e0e0e0" stroke-width="1.2" filter="url(#s)"/>
+  <rect x="6" y="14" width="108" height="9" rx="7" fill="#27ae60"/>
+  <rect x="6" y="19" width="108" height="4" fill="#27ae60"/>
+  <!-- panel solar -->
+  <rect x="14" y="28" width="92" height="48" rx="3" fill="#1a237e" stroke="#0d1b6e" stroke-width="1.5"/>
+  <!-- celdas 3x4 -->
+  <rect x="17" y="31" width="20" height="12" rx="1" fill="#1565c0" stroke="#0d47a1" stroke-width="0.6"/>
+  <rect x="41" y="31" width="20" height="12" rx="1" fill="#1565c0" stroke="#0d47a1" stroke-width="0.6"/>
+  <rect x="65" y="31" width="20" height="12" rx="1" fill="#1565c0" stroke="#0d47a1" stroke-width="0.6"/>
+  <rect x="89" y="31" width="14" height="12" rx="1" fill="#1565c0" stroke="#0d47a1" stroke-width="0.6"/>
+  <rect x="17" y="47" width="20" height="12" rx="1" fill="#1565c0" stroke="#0d47a1" stroke-width="0.6"/>
+  <rect x="41" y="47" width="20" height="12" rx="1" fill="#1565c0" stroke="#0d47a1" stroke-width="0.6"/>
+  <rect x="65" y="47" width="20" height="12" rx="1" fill="#1565c0" stroke="#0d47a1" stroke-width="0.6"/>
+  <rect x="89" y="47" width="14" height="12" rx="1" fill="#1565c0" stroke="#0d47a1" stroke-width="0.6"/>
+  <rect x="17" y="63" width="20" height="10" rx="1" fill="#1565c0" stroke="#0d47a1" stroke-width="0.6"/>
+  <rect x="41" y="63" width="20" height="10" rx="1" fill="#1565c0" stroke="#0d47a1" stroke-width="0.6"/>
+  <rect x="65" y="63" width="20" height="10" rx="1" fill="#1565c0" stroke="#0d47a1" stroke-width="0.6"/>
+  <rect x="89" y="63" width="14" height="10" rx="1" fill="#1565c0" stroke="#0d47a1" stroke-width="0.6"/>
+  <text x="60" y="96" font-family="Arial" font-size="7" font-weight="600" text-anchor="middle" fill="#555">Panel Solar</text>
+  <!-- pin + izq -->
+  <line x1="0" y1="52" x2="6" y2="52" stroke="#e74c3c" stroke-width="2.5"/>
+  <circle cx="3" cy="52" r="4.5" fill="#e74c3c"/>
+  <text x="3" y="47" font-family="Arial" font-size="8" font-weight="bold" text-anchor="middle" fill="#e74c3c">+</text>
+  <!-- pin - der -->
+  <line x1="114" y1="52" x2="120" y2="52" stroke="#555" stroke-width="2.5"/>
+  <circle cx="117" cy="52" r="4.5" fill="#555"/>
+  <text x="117" y="47" font-family="Arial" font-size="9" font-weight="bold" text-anchor="middle" fill="#555">−</text>
+</svg>
